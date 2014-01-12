@@ -1,4 +1,4 @@
-package org.eclipse.gef4.zest.tests.dot;
+package org.eclipse.gef4.graph.tests.dot;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

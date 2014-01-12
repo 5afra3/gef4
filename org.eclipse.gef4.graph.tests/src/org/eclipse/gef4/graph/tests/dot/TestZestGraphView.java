@@ -6,15 +6,13 @@
  * <p/>
  * Contributors: Fabian Steeg - initial API and implementation; see bug 277380
  *******************************************************************************/
-package org.eclipse.gef4.zest.tests.dot;
+package org.eclipse.gef4.graph.tests.dot;
 
-import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.gef4.graph.internal.dot.ZestGraphView;
 import org.eclipse.gef4.zest.core.widgets.Graph;
-import org.eclipse.gef4.zest.internal.dot.DotExport;
-import org.eclipse.gef4.zest.internal.dot.ZestGraphView;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -44,16 +42,6 @@ public final class TestZestGraphView {
 		Graph g = loadGraphInView(DOT);
 		Assert.assertEquals(2, g.getNodes().size());
 		Assert.assertEquals(1, g.getConnections().size());
-	}
-
-	@Test
-	public void experimentalSwtImageExport() throws PartInitException,
-			InterruptedException, IOException {
-		Graph g = loadGraphInView(DOT);
-		DotExport export = new DotExport(g);
-		File image = export.toImage(File.createTempFile("zest", ".png") //$NON-NLS-1$//$NON-NLS-2$
-				.getAbsolutePath());
-		Assert.assertTrue(image.exists());
 	}
 
 	private Graph loadGraphInView(String dot) throws PartInitException {

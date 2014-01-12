@@ -20,7 +20,8 @@ import org.junit.runners.Suite;
  * @author Fabian Steeg (fsteeg)
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ AllHeadlessTests.class, AllUiTests.class })
+@Suite.SuiteClasses({ GraphTests.class, GraphViewerTests.class,
+		GraphSelectionTests.class, IFigureProviderTests.class })
 public final class AllTests {
 	@Before
 	public void setup() {

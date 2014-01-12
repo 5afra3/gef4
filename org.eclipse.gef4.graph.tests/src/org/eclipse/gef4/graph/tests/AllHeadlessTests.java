@@ -19,7 +19,7 @@ import org.junit.runners.Suite;
  * @author Fabian Steeg (fsteeg)
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ LayoutAlgorithmTests.class, DotExportSuite.class,
-		DotImportSuite.class })
+@Suite.SuiteClasses({ LayoutAlgorithmTests.class, GraphTests.class,
+		GraphSelectionTests.class, DotExportSuite.class, DotImportSuite.class })
 public final class AllHeadlessTests {
 }

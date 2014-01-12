@@ -6,12 +6,12 @@
  * <p/>
  * Contributors: Fabian Steeg
  *******************************************************************************/
-package org.eclipse.gef4.zest.tests;
+package org.eclipse.gef4.graph.tests;
 
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.gef4.zest.tests.dot.TestDotDirStore;
-import org.eclipse.gef4.zest.tests.dot.TestDotExtractor;
-import org.eclipse.gef4.zest.tests.dot.TestZestGraphView;
+import org.eclipse.gef4.graph.tests.dot.TestDotDirStore;
+import org.eclipse.gef4.graph.tests.dot.TestDotExtractor;
+import org.eclipse.gef4.graph.tests.dot.TestZestGraphView;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runner.RunWith;

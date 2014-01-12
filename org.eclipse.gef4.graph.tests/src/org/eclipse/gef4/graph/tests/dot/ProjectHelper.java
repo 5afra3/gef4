@@ -6,7 +6,7 @@
  * <p/>
  * Contributors: Fabian Steeg - initial API and implementation; see bug 277380
  *******************************************************************************/
-package org.eclipse.gef4.zest.tests.dot;
+package org.eclipse.gef4.graph.tests.dot;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
