@@ -248,7 +248,6 @@
 		<module>../org.eclipse.gef4.layout</module>
 		<module>../org.eclipse.gef4.zest.core</module>
 		<module>../org.eclipse.gef4.zest.jface</module>
-		<!-- <module>../org.eclipse.gef4.zest.dot.core</module>  -->
 		<module>../org.eclipse.gef4.zest.dot.export</module>
 		<module>../org.eclipse.gef4.zest.feature</module>
 		<module>../org.eclipse.gef4.zest.source-feature</module>
