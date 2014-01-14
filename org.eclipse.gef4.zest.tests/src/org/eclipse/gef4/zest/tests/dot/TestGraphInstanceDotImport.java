@@ -18,12 +18,10 @@ import org.eclipse.gef4.layout.algorithms.SpringLayoutAlgorithm;
 import org.eclipse.gef4.layout.algorithms.TreeLayoutAlgorithm;
 import org.eclipse.gef4.zest.core.widgets.Graph;
 import org.eclipse.gef4.zest.core.widgets.GraphConnection;
-import org.eclipse.gef4.zest.core.widgets.GraphContainer;
 import org.eclipse.gef4.zest.core.widgets.GraphNode;
 import org.eclipse.gef4.zest.core.widgets.ZestStyles;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.Assert;
 import org.junit.Test;
@@ -80,63 +78,15 @@ public final class TestGraphInstanceDotImport {
 	}
 
 	@Test
-	public void clusterSubgraphs() {
+	public void clusterSubgraph() {
 		Shell shell = new Shell();
 		DotImport dotImport = new DotImport(
-				"digraph{subgraph cluster{1->2}; subgraph cluster{1->3}}");
+				"digraph{subgraph cluster_1{1->2}; subgraph cluster_2{1->3}}");
 		Graph graph = new ZestGraph(shell, SWT.NONE,
 				dotImport.newGraphInstance());
-		assertEquals(
-				"Cluster subgraphs should be rendered as graph containers", 2,
-				graph.getNodes().size());
-		assertEquals(GraphContainer.class, graph.getNodes().get(0).getClass());
-		assertEquals(GraphContainer.class, graph.getNodes().get(1).getClass());
+		assertEquals("Cluster subgraphs are ignored in rendering", 3, graph
+				.getNodes().size());
 		assertEquals(2, graph.getConnections().size());
-	}
-
-	@Test
-	public void labeledClusterSubgraph() {
-		Shell shell = new Shell();
-		DotImport dotImport = new DotImport("digraph{"
-				+ "subgraph cluster{graph[layout=twopi]; label=left; 1->2}; "
-				+ "subgraph cluster{label=right; 1->3; 3->4; 3->5};}");
-		Graph graph = new ZestGraph(shell, SWT.NONE,
-				dotImport.newGraphInstance());
-		// open(shell);
-		assertEquals(4, graph.getConnections().size());
-		assertEquals("The graph should contain two nodes", 2, graph.getNodes()
-				.size());
-		assertEquals("left", ((Item) graph.getNodes().get(0)).getText());
-		assertEquals("right", ((Item) graph.getNodes().get(1)).getText());
-		assertEquals("The first node should be a graph container",
-				GraphContainer.class, graph.getNodes().get(0).getClass());
-		assertEquals(2, ((GraphContainer) graph.getNodes().get(0)).getNodes()
-				.size());
-		assertEquals("The second node should be a graph container",
-				GraphContainer.class, graph.getNodes().get(1).getClass());
-		assertEquals(3, ((GraphContainer) graph.getNodes().get(1)).getNodes()
-				.size());
-		assertEquals(RadialLayoutAlgorithm.class, ((GraphContainer) graph
-				.getNodes().get(0)).getLayoutAlgorithm().getClass());
-		// TODO nodes between and after subgraphs
-	}
-
-	@Test
-	public void layoutClusterSubgraph() {
-		Shell shell = new Shell();
-		Graph graph = new ZestGraph(shell, SWT.NONE,
-				new org.eclipse.gef4.graph.Graph("digraph{"
-						+ "subgraph cluster{graph[layout=twopi]}; "
-						+ "subgraph cluster{};}"));
-		// open(shell);
-		assertEquals("The first node should be a graph container",
-				GraphContainer.class, graph.getNodes().get(0).getClass());
-		assertEquals("The second node should be a graph container",
-				GraphContainer.class, graph.getNodes().get(1).getClass());
-		assertEquals(RadialLayoutAlgorithm.class, ((GraphContainer) graph
-				.getNodes().get(0)).getLayoutAlgorithm().getClass());
-		assertEquals(TreeLayoutAlgorithm.class, ((GraphContainer) graph
-				.getNodes().get(1)).getLayoutAlgorithm().getClass());
 	}
 
 	@Test
