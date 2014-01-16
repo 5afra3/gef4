@@ -95,14 +95,20 @@ public final class TestGraphInstanceDotImport {
 		Assert.assertNotNull("Created graph must not be null", graph); //$NON-NLS-1$
 		Assert.assertEquals(ZestStyles.CONNECTIONS_DIRECTED,
 				graph.getConnectionStyle());
+		Assert.assertEquals(ZestStyles.CONNECTIONS_DIRECTED,
+				((GraphConnection) graph.getConnections().get(0))
+						.getConnectionStyle());
 	}
 
 	@Test
 	public void graphType() {
 		Graph graph = parse("graph Sample{1;2;1--2}"); //$NON-NLS-1$
 		Assert.assertNotNull("Created graph must not be null", graph); //$NON-NLS-1$
-		Assert.assertNotSame(ZestStyles.CONNECTIONS_DIRECTED,
+		Assert.assertEquals(ZestStyles.CONNECTIONS_SOLID,
 				graph.getConnectionStyle());
+		Assert.assertEquals(ZestStyles.CONNECTIONS_SOLID,
+				((GraphConnection) graph.getConnections().get(0))
+						.getConnectionStyle());
 	}
 
 	@Test

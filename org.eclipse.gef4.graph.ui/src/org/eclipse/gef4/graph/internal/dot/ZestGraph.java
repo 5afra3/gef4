@@ -33,6 +33,22 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class ZestGraph extends Graph {
 
+	private org.eclipse.gef4.graph.Graph dotGraph;
+
+	@SuppressWarnings("serial")
+	private Map<ZestStyle, Integer> map = new HashMap<ZestStyle, Integer>() {
+		{
+			put(ZestStyle.GRAPH_DIRECTED, ZestStyles.CONNECTIONS_DIRECTED);
+			put(ZestStyle.GRAPH, ZestStyles.CONNECTIONS_SOLID);
+			put(ZestStyle.LINE_DASH, SWT.LINE_DASH);
+			put(ZestStyle.LINE_DASHDOT, SWT.LINE_DASHDOT);
+			put(ZestStyle.LINE_DASHDOTDOT, SWT.LINE_DASHDOTDOT);
+			put(ZestStyle.LINE_DOT, SWT.LINE_DOT);
+			put(ZestStyle.LINE_SOLID, SWT.LINE_SOLID);
+			put(ZestStyle.NONE, ZestStyles.NONE);
+		}
+	};
+
 	public ZestGraph(Composite parent, int style) {
 		super(parent, style);
 	}
@@ -40,6 +56,7 @@ public class ZestGraph extends Graph {
 	public ZestGraph(Composite parent, int style,
 			org.eclipse.gef4.graph.Graph dotGraph) {
 		super(parent, style);
+		this.dotGraph = dotGraph;
 		Map<Node, GraphNode> nodes = new HashMap<Node, GraphNode>();
 		for (Node node : dotGraph.getNodes()) {
 			GraphNode graphNode = dotNodeToZestNode(node);
@@ -70,13 +87,6 @@ public class ZestGraph extends Graph {
 	}
 
 	private void setGraphType(org.eclipse.gef4.graph.Graph dotGraph) {
-		@SuppressWarnings("serial")
-		Map<ZestStyle, Integer> map = new HashMap<ZestStyle, Integer>() {
-			{
-				put(ZestStyle.GRAPH_DIRECTED, ZestStyles.CONNECTIONS_DIRECTED);
-				put(ZestStyle.GRAPH, ZestStyles.CONNECTIONS_SOLID);
-			}
-		};
 		Object type = dotGraph.getAttribute(Attr.GRAPH_TYPE.toString());
 		if (type != null)
 			this.setConnectionStyle(map.get(ZestStyle.valueOf(type.toString())));
@@ -84,18 +94,12 @@ public class ZestGraph extends Graph {
 
 	private GraphConnection dotEdgeToZestEdge(Edge edge,
 			GraphNode sourceZestNode, GraphNode targetZestNode) {
-		@SuppressWarnings("serial")
-		Map<ZestStyle, Integer> map = new HashMap<ZestStyle, Integer>() {
-			{
-				put(ZestStyle.LINE_DASH, SWT.LINE_DASH);
-				put(ZestStyle.LINE_DASHDOT, SWT.LINE_DASHDOT);
-				put(ZestStyle.LINE_DASHDOTDOT, SWT.LINE_DASHDOTDOT);
-				put(ZestStyle.LINE_DOT, SWT.LINE_DOT);
-				put(ZestStyle.LINE_SOLID, SWT.LINE_SOLID);
-				put(ZestStyle.NONE, ZestStyles.NONE);
-			}
-		};
-		GraphConnection connection = new GraphConnection(this, SWT.NONE,
+		int graphType = SWT.NONE;
+		ZestStyle type = (ZestStyle) dotGraph.getAttribute(Attr.GRAPH_TYPE
+				.toString());
+		if (type != null)
+			graphType = map.get(type);
+		GraphConnection connection = new GraphConnection(this, graphType,
 				sourceZestNode, targetZestNode);
 		Object edgeStyle = edge.getAttribute(Attr.EDGE_STYLE.toString());
 		if (edgeStyle != null) {
